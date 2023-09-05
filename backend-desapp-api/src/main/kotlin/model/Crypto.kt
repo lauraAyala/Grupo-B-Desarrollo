@@ -2,9 +2,10 @@ package model
 
 import java.time.LocalDateTime
 
-class Crypto {
+open class Crypto {
 
     var userCreate:User?=null
     var quote:Double?= null
     var operativeDate:LocalDateTime?= null
+    var typeCrypto: TypeCrypto? = null
 }
