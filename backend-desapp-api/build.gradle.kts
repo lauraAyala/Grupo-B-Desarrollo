@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
 plugins {
 	war
 	id("org.springframework.boot") version "2.7.15"
@@ -7,10 +8,24 @@ plugins {
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
 	kotlin("plugin.jpa") version "1.6.21"
+	id ("org.sonarqube") version "4.3.1.3277"
+
+
 }
+
+sonarqube {
+	properties {
+		property("sonar.projectKey", "lauraAyala_Grupo-B-Desarrollo")
+		property ("sonar.organization", "lauraayala")
+		property ("sonar.host.url", "https://sonarcloud.io")
+	}
+}
+
 
 group = "ar.edu.unq.desapp.grupoB"
 version = "0.0.1-SNAPSHOT"
+
+
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
