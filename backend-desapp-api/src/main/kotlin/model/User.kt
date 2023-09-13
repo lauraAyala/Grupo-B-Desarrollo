@@ -12,6 +12,9 @@ open class User () : Serializable{
     var cvu:String? = null
     var directionWallet:String?= null
     var cryotoActives:ArrayList<Crypto> = ArrayList()
+    var operation:ArrayList<Operation> = ArrayList()
+    var countOperations = 0
+    var reception = false
 
     constructor(nameU: String, lastNameU:String, emailU: String, directionU:String, passwordU:String, cvu:String, directionWalletU: String) : this(){
 
@@ -31,6 +34,38 @@ open class User () : Serializable{
     }
 
 
+    fun saleCrypto(crypto:Crypto,cantNominal:Int, amount:Double):User{
+
+        var operationType = SaleOperation()
+        var operation = Operation(this,cantNominal,crypto,amount,operationType)
+        this.operation.add(operation)
+        //this.countOperations +=1
+        operation.processAction()
+        return this
+    }
+
+    fun buyCrypto(crypto:Crypto,cantNominal:Int, amount:Double):User{
+
+        var operationType = BuyOperation()
+        var operation = Operation(this,cantNominal,crypto,amount,operationType)
+        this.operation.add(operation)
+        this.countOperations +=1
+        return this
+    }
+
+    fun canceledCrypto(crypto:Crypto,cantNominal:Int, amount:Double):User{
+
+        var operationType = CancelOperation()
+        var operation = Operation(this,cantNominal,crypto,amount,operationType)
+        this.operation.add(operation)
+        this.countOperations +=1
+        return this
+    }
+
+    fun updatReception() {
+        this.reception = true
+        this.countOperations +=1
+    }
 
 
 }

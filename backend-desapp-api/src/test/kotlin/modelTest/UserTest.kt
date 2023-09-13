@@ -1,6 +1,10 @@
 package modelTest
 
+import builder.CryptoBuilder
 import builder.UserBuilder
+import model.Operation
+import model.SaleOperation
+import model.TypeCrypto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.security.core.userdetails.User
@@ -53,6 +57,48 @@ class UserTest {
         var user1: UserBuilder = UserBuilder().builder()
         user1.withDirectionWallet("layala12")
         Assertions.assertEquals(user1.directionWallet, "layala12")
+    }
+
+    @Test
+    fun userCreatedOperationOfTypeSale() {
+
+        var user: UserBuilder = UserBuilder().builder()
+        var crypto: CryptoBuilder = CryptoBuilder().builder()
+        crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
+        user.saleCrypto(crypto,2,200.0)
+        var operation: Operation = user.operation.get(0)
+
+        Assertions.assertEquals(user.operation.size,1)
+        Assertions.assertEquals(operation.crypto, crypto)
+        Assertions.assertEquals(operation.userCreated, user)
+    }
+
+    @Test
+    fun userCreatedOperationOfTypeBuy() {
+
+        var user: UserBuilder = UserBuilder().builder()
+        var crypto: CryptoBuilder = CryptoBuilder().builder()
+        crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
+        user.buyCrypto(crypto,2,200.0)
+        var operation: Operation = user.operation.get(0)
+
+        Assertions.assertEquals(user.operation.size,1)
+        Assertions.assertEquals(operation.crypto, crypto)
+        Assertions.assertEquals(operation.userCreated, user)
+    }
+
+    @Test
+    fun userCreatedOperationOfTypeCanceled() {
+
+        var user: UserBuilder = UserBuilder().builder()
+        var crypto: CryptoBuilder = CryptoBuilder().builder()
+        crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
+        user.canceledCrypto(crypto,2,200.0)
+        var operation: Operation = user.operation.get(0)
+
+        Assertions.assertEquals(user.operation.size,1)
+        Assertions.assertEquals(operation.crypto, crypto)
+        Assertions.assertEquals(operation.userCreated, user)
     }
 
 
