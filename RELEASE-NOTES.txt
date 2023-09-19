@@ -1,0 +1,16 @@
+---------------------------------------------------------------------
+ENTREGA 1 TAG 1.0
+---------------------------------------------------------------------
+NEW FEATURES
+
+* Added user registration service.
+* SonarCloud integration.
+* The model logic is user, crypto, operations, operations type: buy, sale.
+* Of the functionalities, a user can register, a user can register a crypto, a user can buy or sell and everything is tested.
+
+NOTES
+
+* Configuration Swagger
+* The local host does not connect
+* Configuration Railway
+
