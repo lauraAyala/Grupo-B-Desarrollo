@@ -2,10 +2,9 @@ name: SonarCloud
 on:
   push:
     branches:
-      - "main"
+      - main
   pull_request:
-    branches: "main"
-    
+    types: [opened, synchronize, reopened]
 jobs:
   build:
     name: Build and analyze
@@ -35,6 +34,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run:
-          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
-
+        run: ./gradlew build sonar --info
