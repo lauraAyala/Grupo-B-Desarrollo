@@ -13,7 +13,7 @@ plugins {
 
 }
 
-sonarqube {
+sonar {
 	properties {
 		property("sonar.projectKey", "lauraAyala_Grupo-B-Desarrollo")
 		property ("sonar.organization", "lauraayala")
