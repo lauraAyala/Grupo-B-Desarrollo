@@ -1,16 +1,16 @@
-package builder
+package ar.edu.unq.desapp.grupoB.backenddesappapi.builder
 
-import model.User
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.User
 
 class UserBuilder : User() {
 
-    fun withName(nameU:String) :User{
+    fun withName(nameU:String) : User {
 
         this.name= nameU
         return this
     }
 
-    fun withLastName(lastName: String): User{
+    fun withLastName(lastName: String): User {
 
         this.lastName = lastName
         return this
@@ -22,30 +22,30 @@ class UserBuilder : User() {
         return this
     }
 
-    fun withCvu(cvu:String) : User{
+    fun withCvu(cvu:String) : User {
 
         this.cvu = cvu
         return this
     }
 
-    fun withDirection(directionU:String): User{
+    fun withDirection(directionU:String): User {
 
         this.direction = directionU
         return this
     }
 
-    fun withDirectionWallet(directionWalletU:String):User{
+    fun withDirectionWallet(directionWalletU:String): User {
 
         this.directionWallet = directionWalletU
         return this
     }
 
-    fun builder():UserBuilder{
+    fun builder(): UserBuilder {
 
         return UserBuilder()
     }
 
-    fun withPassword(password: String) : User{
+    fun withPassword(password: String) : User {
 
         this.password = password
         return this

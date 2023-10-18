@@ -1,4 +1,4 @@
-package model
+package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.io.Serializable
@@ -53,7 +53,7 @@ open class User () : Serializable{
     }
 
 
-    fun saleCrypto(crypto:Crypto,cantNominal:Int, amount:Double):User{
+    fun saleCrypto(crypto: Crypto, cantNominal:Int, amount:Double): User {
 
         var operationType = SaleOperation()
         var operation = Operation(this,cantNominal,crypto,amount,operationType)
@@ -63,7 +63,7 @@ open class User () : Serializable{
         return this
     }
 
-    fun buyCrypto(crypto:Crypto,cantNominal:Int, amount:Double):User{
+    fun buyCrypto(crypto: Crypto, cantNominal:Int, amount:Double): User {
 
         var operationType = BuyOperation()
         var operation = Operation(this,cantNominal,crypto,amount,operationType)
@@ -72,7 +72,7 @@ open class User () : Serializable{
         return this
     }
 
-    fun canceledCrypto(crypto:Crypto,cantNominal:Int, amount:Double):User{
+    fun canceledCrypto(crypto: Crypto, cantNominal:Int, amount:Double): User {
 
         var operationType = CancelOperation()
         var operation = Operation(this,cantNominal,crypto,amount,operationType)

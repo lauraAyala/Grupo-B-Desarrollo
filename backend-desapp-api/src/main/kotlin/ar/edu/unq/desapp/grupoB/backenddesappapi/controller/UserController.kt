@@ -1,8 +1,8 @@
-package controller
+package ar.edu.unq.desapp.grupoB.backenddesappapi.controller
 
-import model.User
-import dto.UserDTO
-import request.UserRequest
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.User
+import ar.edu.unq.desapp.grupoB.backenddesappapi.dto.UserDTO
+import ar.edu.unq.desapp.grupoB.backenddesappapi.request.UserRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import service.UserService
+import ar.edu.unq.desapp.grupoB.backenddesappapi.service.UserService
 
 @RestController
 class UserController {

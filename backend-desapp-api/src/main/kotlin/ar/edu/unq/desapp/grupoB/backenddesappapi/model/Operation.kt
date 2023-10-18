@@ -1,6 +1,7 @@
-package model
+package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
 import javax.persistence.*
+import kotlin.jvm.Transient
 
 @Entity
 class Operation() {
@@ -8,23 +9,24 @@ class Operation() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Long? = null
-    @JoinColumn(name = "userCreate_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userCreated")
     var userCreated: User? =null
     @Column
     var cantNominal: Int?=null
-    @Column
+    @Transient
     var crypto: Crypto? = null
     @Column
     var amount: Double? = null
-    @Column
+    @Transient
     var operationType: OperationType?=null
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userInterested_id")
-    var userInterested:User?= null
+    var userInterested: User?= null
     @Column
     var direction:String? =null
 
-    constructor(user: User, cantNominal:Int, crypto: Crypto, amount:Double, operationType: OperationType ) :this(){
+    constructor(user: User, cantNominal:Int, crypto: Crypto, amount:Double, operationType: OperationType) :this(){
 
         this.userCreated=user
         this.cantNominal=cantNominal

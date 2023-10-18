@@ -1,8 +1,8 @@
 package modelTest
 
-import builder.CryptoBuilder
-import builder.UserBuilder
-import model.TypeCrypto
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.CryptoBuilder
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

@@ -1,10 +1,10 @@
 package modelTest
 
-import builder.CryptoBuilder
-import builder.UserBuilder
-import model.Operation
-import model.SaleOperation
-import model.TypeCrypto
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.CryptoBuilder
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Operation
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.SaleOperation
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.security.core.userdetails.User

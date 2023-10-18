@@ -1,4 +1,4 @@
-package model
+package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
 enum class TypeCrypto{
 

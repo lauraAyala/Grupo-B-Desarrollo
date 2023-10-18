@@ -1,10 +1,10 @@
 package modelTest
 
-import builder.CryptoBuilder
-import builder.UserBuilder
-import model.Aplication
-import model.CryptoQuote
-import model.TypeCrypto
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.CryptoBuilder
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Aplication
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.CryptoQuote
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -28,7 +28,7 @@ class AplicationTest {
     fun createdAplicationWithOneCryptoAdd(){
 
         var app: Aplication = Aplication()
-        var crypto: CryptoBuilder= CryptoBuilder().builder()
+        var crypto: CryptoBuilder = CryptoBuilder().builder()
         app.registerCrypto(crypto)
         Assertions.assertEquals(app.cryptos.size,  1)
         Assertions.assertTrue(app.cryptos.contains(crypto))

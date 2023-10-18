@@ -1,6 +1,6 @@
-package model
+package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
-class CancelOperation : OperationType() {
+class BuyOperation : OperationType() {
     override fun realizeAction(operation: Operation) {
         TODO("Not yet implemented")
     }
