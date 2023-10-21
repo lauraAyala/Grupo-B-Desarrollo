@@ -36,4 +36,21 @@ class Aplication {
         return null
 
     }
+
+    fun cotitationCryptoActive() : ArrayList<CryptoQuote>{
+
+        return cryptosQuote
+
+    }
+
+    fun intentionsActiveOfSaleAndBuyCryptos() : ArrayList<Operation>{
+
+        var intentionsActives : ArrayList<Operation> = ArrayList()
+        for (i in this.users){
+
+            intentionsActives.addAll(i.operations)
+
+        }
+        return intentionsActives
+    }
 }

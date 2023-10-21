@@ -3,11 +3,9 @@ package modelTest
 import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.CryptoBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Operation
-import ar.edu.unq.desapp.grupoB.backenddesappapi.model.SaleOperation
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.springframework.security.core.userdetails.User
 
 class UserTest {
 
@@ -66,9 +64,9 @@ class UserTest {
         var crypto: CryptoBuilder = CryptoBuilder().builder()
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
         user.saleCrypto(crypto,2,200.0)
-        var operation: Operation = user.operation.get(0)
+        var operation: Operation = user.operations.get(0)
 
-        Assertions.assertEquals(user.operation.size,1)
+        Assertions.assertEquals(user.operations.size,1)
         Assertions.assertEquals(operation.crypto, crypto)
         Assertions.assertEquals(operation.userCreated, user)
     }
@@ -80,9 +78,9 @@ class UserTest {
         var crypto: CryptoBuilder = CryptoBuilder().builder()
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
         user.buyCrypto(crypto,2,200.0)
-        var operation: Operation = user.operation.get(0)
+        var operation: Operation = user.operations.get(0)
 
-        Assertions.assertEquals(user.operation.size,1)
+        Assertions.assertEquals(user.operations.size,1)
         Assertions.assertEquals(operation.crypto, crypto)
         Assertions.assertEquals(operation.userCreated, user)
     }
@@ -94,9 +92,9 @@ class UserTest {
         var crypto: CryptoBuilder = CryptoBuilder().builder()
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
         user.canceledCrypto(crypto,2,200.0)
-        var operation: Operation = user.operation.get(0)
+        var operation: Operation = user.operations.get(0)
 
-        Assertions.assertEquals(user.operation.size,1)
+        Assertions.assertEquals(user.operations.size,1)
         Assertions.assertEquals(operation.crypto, crypto)
         Assertions.assertEquals(operation.userCreated, user)
     }

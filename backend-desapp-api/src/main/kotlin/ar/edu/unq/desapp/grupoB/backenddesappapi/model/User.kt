@@ -29,7 +29,7 @@ open class User () : Serializable{
     var cryotoActives:ArrayList<Crypto> = ArrayList()
     @JsonIgnore
     @OneToMany( fetch = FetchType.EAGER , mappedBy = "userCreated", cascade = arrayOf(CascadeType.ALL))
-    var operation:MutableList<Operation> = ArrayList()
+    var operations:MutableList<Operation> = ArrayList()
     @Column
     var countOperations = 0
     @Transient
@@ -57,7 +57,7 @@ open class User () : Serializable{
 
         var operationType = SaleOperation()
         var operation = Operation(this,cantNominal,crypto,amount,operationType)
-        this.operation.add(operation)
+        this.operations.add(operation)
         //this.countOperations +=1
         operation.processAction()
         return this
@@ -67,7 +67,7 @@ open class User () : Serializable{
 
         var operationType = BuyOperation()
         var operation = Operation(this,cantNominal,crypto,amount,operationType)
-        this.operation.add(operation)
+        this.operations.add(operation)
         this.countOperations +=1
         return this
     }
@@ -76,7 +76,7 @@ open class User () : Serializable{
 
         var operationType = CancelOperation()
         var operation = Operation(this,cantNominal,crypto,amount,operationType)
-        this.operation.add(operation)
+        this.operations.add(operation)
         this.countOperations +=1
         return this
     }
