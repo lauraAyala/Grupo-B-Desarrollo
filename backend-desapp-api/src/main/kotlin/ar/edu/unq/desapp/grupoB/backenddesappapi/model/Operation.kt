@@ -4,17 +4,21 @@ import javax.persistence.*
 import kotlin.jvm.Transient
 
 @Entity
+@Table
 class Operation() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Long? = null
+    @Column
+    var nameOperation : String? = null
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userCreated")
     var userCreated: User? =null
     @Column
     var cantNominal: Int?=null
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "crypto")
     var crypto: Crypto? = null
     @Column
     var amount: Double? = null
@@ -33,6 +37,8 @@ class Operation() {
         this.crypto = crypto
         this.amount = amount
         this.operationType = operationType
+        this.nameOperation = operationType.type
+        this.direction = user.directionWallet
 
     }
 

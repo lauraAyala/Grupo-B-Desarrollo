@@ -6,6 +6,7 @@ import javax.persistence.*
 import kotlin.jvm.Transient
 
 @Entity
+@Table(name="userT")
 open class User () : Serializable{
 
     @Id

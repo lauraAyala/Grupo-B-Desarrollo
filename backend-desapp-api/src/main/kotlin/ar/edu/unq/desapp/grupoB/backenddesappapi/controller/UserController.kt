@@ -16,7 +16,7 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.service.UserService
 class UserController {
 
     @Autowired
-    lateinit var service : UserService
+    lateinit var serviceUser : UserService
 
     @GetMapping("/")
     fun welcome(): String{
@@ -25,15 +25,14 @@ class UserController {
 
     @GetMapping("/users")
     fun getUsers() : List<User>{
-        return service.allUsers()
+        return serviceUser.allUsers()
     }
 
     @PostMapping("/register")
     fun saveUser(@RequestBody userRequest : UserRequest) : ResponseEntity<UserDTO> {
         var user = User(userRequest.name!!,userRequest.lastName!!,userRequest.email!!,userRequest.password!!,userRequest.direction!!,userRequest.cvu!!, userRequest.directionWallet!!)
-        service.createUser(user)
+        serviceUser.createUser(user)
         var userDTO = UserDTO(user.name!!)
         return ResponseEntity(userDTO, HttpStatus.CREATED)
     }
-
 }

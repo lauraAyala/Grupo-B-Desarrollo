@@ -19,4 +19,17 @@ class UserService {
     fun allUsers(): List<User>{
         return repo.findAll()
     }
+
+    fun findBy(user: Int): User {
+
+        for (i in allUsers()){
+
+            if( i.id.hashCode() == user){
+
+                return i
+            }
+        }
+
+        return User() //esto se tienen ue manejar con una excepcion
+    }
 }

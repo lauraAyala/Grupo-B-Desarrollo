@@ -1,8 +1,13 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
-abstract class OperationType {
+import org.springframework.transaction.annotation.Transactional
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
+open class OperationType {
 
-    abstract fun realizeAction(operation: Operation)
+   var type: String? =null
+     open fun realizeAction(operation: Operation) {}
 
 }
