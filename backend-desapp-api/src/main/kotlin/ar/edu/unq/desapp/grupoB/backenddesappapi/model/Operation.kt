@@ -17,14 +17,15 @@ class Operation() {
     var userCreated: User? =null
     @Column
     var cantNominal: Int?=null
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "crypto")
+    /*@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "crypto")*/
+    @Transient
     var crypto: Crypto? = null
     @Column
     var amount: Double? = null
     @Transient
     var operationType: OperationType?=null
-    @ManyToOne(fetch = FetchType.LAZY)
+   @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userInterested_id")
     var userInterested: User?= null
     @Column
@@ -38,7 +39,6 @@ class Operation() {
         this.amount = amount
         this.operationType = operationType
         this.nameOperation = operationType.type
-        this.direction = user.directionWallet
 
     }
 

@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.service
 
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Crypto
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -30,6 +32,25 @@ class UserService {
             }
         }
 
-        return User() //esto se tienen ue manejar con una excepcion
+        var user = UserBuilder().builder()
+        return user //esto se tienen ue manejar con una excepcion
+    }
+
+
+    fun recoverUser(id : Long) : User{
+
+        return repo.getOne(id)
+    }
+
+    fun buyOperation(user: User, crypto: Crypto, count:Int, quote:Double): User {
+
+        return user.buyCrypto(crypto,count,quote)
+
+    }
+
+    fun saleCrypto(user: User, crypto: Crypto, countNominal: Int, quote: Double): User {
+
+        return user.saleCrypto(crypto,countNominal,quote)
+
     }
 }

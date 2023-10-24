@@ -42,12 +42,15 @@ class OperationController {
     @PostMapping("/buyCrypto")
     fun saveOperation(@RequestBody operationRequest: OperationRequest) : ResponseEntity<OperationDTO> {
 
-        var operationType : OperationType = BuyOperation()
-        var user: User = serviceUser.findBy(operationRequest.user)
+        var operationType = BuyOperation()
         var operativeDate : LocalDateTime = LocalDateTime.now()
+        var user : User= serviceUser.recoverUser(operationRequest.user.toLong())
         var cryptoOfType : TypeCrypto = serviceCrypto.findOfType(operationRequest.typeCrypto)
-        var crypto : Crypto = serviceCrypto.createCrypto(Crypto(user,operationRequest.quote,operativeDate,cryptoOfType))
-        service.createOperation(Operation(user, operationRequest.countNominal,crypto,operationRequest.quote, operationType))
+
+        var crypto : Crypto = Crypto(operationRequest.quote,operativeDate,cryptoOfType)
+        var userUpdate = serviceUser.buyOperation(user, crypto,operationRequest.countNominal, operationRequest.quote)
+        var operation  = Operation(userUpdate,operationRequest.countNominal,crypto,operationRequest.quote,operationType)
+        service.createOperation(operation)
         var operationDTO = OperationDTO(operationType.type!!,operationRequest.typeCrypto, operationRequest.user)
         return ResponseEntity(operationDTO, HttpStatus.CREATED)
     }
@@ -56,11 +59,13 @@ class OperationController {
     fun saveOperationSale(@RequestBody operationRequest: OperationRequest) : ResponseEntity<OperationDTO> {
 
         var operationType : OperationType = SaleOperation()
-        var user: User = serviceUser.findBy(operationRequest.user)
+        var user: User = serviceUser.recoverUser(operationRequest.user.toLong())
         var operativeDate : LocalDateTime = LocalDateTime.now()
         var cryptoOfType : TypeCrypto = serviceCrypto.findOfType(operationRequest.typeCrypto)
-        var crypto : Crypto = serviceCrypto.createCrypto(Crypto(user,operationRequest.quote,operativeDate,cryptoOfType))
-        service.createOperation(Operation(user, operationRequest.countNominal,crypto,operationRequest.quote, operationType))
+
+        var crypto : Crypto = serviceCrypto.createCrypto(Crypto(operationRequest.quote,operativeDate,cryptoOfType))
+        var userUpdate = serviceUser.saleCrypto(user,crypto,operationRequest.countNominal,operationRequest.quote)
+        service.createOperation(Operation(user, operationRequest.countNominal,crypto,operationRequest.quote,operationType))
         var operationDTO = OperationDTO(operationType.type!!,operationRequest.typeCrypto, operationRequest.user)
         return ResponseEntity(operationDTO, HttpStatus.CREATED)
     }

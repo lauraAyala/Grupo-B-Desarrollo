@@ -2,15 +2,14 @@ package ar.edu.unq.desapp.grupoB.backenddesappapi.controller
 
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupoB.backenddesappapi.dto.UserDTO
+import ar.edu.unq.desapp.grupoB.backenddesappapi.request.IdRequest
 import ar.edu.unq.desapp.grupoB.backenddesappapi.request.UserRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.UserService
+import org.springframework.web.bind.annotation.*
+import javax.persistence.Id
 
 @RestController
 class UserController {
@@ -35,4 +34,14 @@ class UserController {
         var userDTO = UserDTO(user.name!!)
         return ResponseEntity(userDTO, HttpStatus.CREATED)
     }
+
+    @GetMapping("/userId")
+    fun userOfId(@RequestBody id: IdRequest) : ResponseEntity<User>{
+
+        var user = serviceUser.findBy(id.id)
+        return ResponseEntity(user, HttpStatus.ACCEPTED)
+
+    }
+    @GetMapping("/user/{id}")
+    fun findById(@PathVariable id: Int) = serviceUser.recoverUser(id.toLong())
 }

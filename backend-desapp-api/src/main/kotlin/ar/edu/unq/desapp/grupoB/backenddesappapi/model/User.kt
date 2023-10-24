@@ -1,10 +1,10 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import net.bytebuddy.asm.Advice.AllArguments
 import java.io.Serializable
 import javax.persistence.*
 import kotlin.jvm.Transient
-
 @Entity
 @Table(name="userT")
 open class User () : Serializable{
@@ -29,7 +29,7 @@ open class User () : Serializable{
     @Transient
     var cryotoActives:ArrayList<Crypto> = ArrayList()
     @JsonIgnore
-    @OneToMany( fetch = FetchType.EAGER , mappedBy = "userCreated", cascade = arrayOf(CascadeType.ALL))
+   @OneToMany( fetch = FetchType.EAGER , mappedBy = "userCreated", cascade = arrayOf(CascadeType.ALL))
     var operations:MutableList<Operation> = ArrayList()
     @Column
     var countOperations = 0

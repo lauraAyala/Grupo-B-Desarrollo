@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.service
 
+import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.CryptoBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Crypto
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import ar.edu.unq.desapp.grupoB.backenddesappapi.repository.CryptoRepository
@@ -13,8 +14,8 @@ class CryptoService {
     lateinit var repo : CryptoRepository
 
     fun createCrypto(crypto : Crypto) : Crypto {
-        repo.save(crypto)
-        return crypto
+        //gruporepo.save(crypto)
+        return  repo.save(crypto)
     }
 
     fun allCryptos(): List<Crypto>{
@@ -44,6 +45,23 @@ class CryptoService {
             }
         }
         return TypeCrypto.ALICEUSDT
+    }
+
+    fun findCryptoOF(cryptoOfType: TypeCrypto): Crypto {
+
+        for (c in repo.findAll()){
+
+            if (c.typeCrypto == cryptoOfType){
+
+                return c
+
+            }
+
+        }
+
+        var crypto = CryptoBuilder().builder()
+        return crypto
+
     }
 
 }
