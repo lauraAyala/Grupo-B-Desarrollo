@@ -11,11 +11,12 @@ class SaleOperation : OperationType() {
     val typeOperation = "Sale"
     override fun realizeAction(operation: Operation) {
 
-        var cvuDirection = operation.userCreated?.cvu
-        if (cvuDirection != null) {
-            operation.updateDirection(cvuDirection)
+
+        if (operation.userInterested != null) {
+            operation.userInterested?.makeTransfer(operation.userCreated!!)
+            println("Confirm reception")
         }
-        operation.userCreated?.updatReception()
+
     }
 
 }
