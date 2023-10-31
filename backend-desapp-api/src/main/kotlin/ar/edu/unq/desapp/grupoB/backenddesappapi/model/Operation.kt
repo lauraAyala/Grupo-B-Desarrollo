@@ -48,13 +48,21 @@ class Operation() {
 
         return this
     }
-    fun processAction() {
+    fun processAction() : Operation{
 
-        this.operationType?.realizeAction(this)
+        return (this.operationType!!.realizeAction(this))
+
     }
 
     fun updateDirection(direction:String){
 
         this.direction = direction
+    }
+
+    fun updateUserCreated(user: User): Operation {
+
+        this.userCreated = user
+
+        return this
     }
 }
