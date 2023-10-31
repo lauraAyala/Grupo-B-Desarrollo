@@ -29,6 +29,8 @@ open class User () : Serializable{
     @Transient
     var cryotoActives:ArrayList<Crypto> = ArrayList()
     @JsonIgnore
+
+
    @OneToMany( fetch = FetchType.EAGER , mappedBy = "userCreated", cascade = arrayOf(CascadeType.ALL))
     var operations:MutableList<Operation> = ArrayList()
     @Column
