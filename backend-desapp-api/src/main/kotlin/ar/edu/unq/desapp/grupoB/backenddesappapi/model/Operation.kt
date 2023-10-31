@@ -42,11 +42,12 @@ class Operation() {
 
     }
 
-    fun updateUserInterested(user: User){
+    fun updateUserInterested(user: User): Operation{
 
         this.userInterested=user
-    }
 
+        return this
+    }
     fun processAction() {
 
         this.operationType?.realizeAction(this)

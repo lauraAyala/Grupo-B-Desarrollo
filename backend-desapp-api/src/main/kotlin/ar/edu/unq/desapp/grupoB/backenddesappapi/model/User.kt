@@ -90,5 +90,13 @@ open class User () : Serializable{
         this.countOperations +=1
     }
 
+    fun process(operation: Operation) {
+        operation.processAction()
+    }
 
+    fun makeTransfer(user: User){
+        user.updatReception()
+        this.directionForTransfer = user.cvu
+
+    }
 }
