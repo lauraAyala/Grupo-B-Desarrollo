@@ -99,5 +99,40 @@ class UserTest {
         Assertions.assertEquals(operation.userCreated, user)
     }
 
+   @Test
+    fun userMakesThePurchase0fACrypto(){
+
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        var operativeDate = LocalDateTime.now()
+        var ALICEUSDT = TypeCrypto.ALICEUSDT
+        var crypto = Crypto(pepe,20.0,operativeDate,ALICEUSDT)
+        var operationType= OperationType()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        var userUpdate = pepe.buyCrypto(crypto,2,200.0)
+        var operationUpdate: Operation = userUpdate.operations.get(0)
+
+        Assertions.assertEquals(userUpdate.directionWallet,operationUpdate.direction)
+        Assertions.assertEquals(userUpdate.reception,true)
+        Assertions.assertEquals(userUpdate.operations.size,1)
+
+    }
+
+    @Test
+    fun userMakesThesaleOfCrypto(){
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
+        var operativeDate = LocalDateTime.now()
+        var ALICEUSDT = TypeCrypto.ALICEUSDT
+        var crypto = Crypto(pepe,20.0,operativeDate,ALICEUSDT)
+        var operationType= SaleOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        operation = operation.updateUserInterested(jose)
+        var pepeUpdate = pepe.saleCrypto(crypto,2,200.0)
+       // var operationUpdate: Operation = pepeUpdate.operations.get(0)
+
+       Assertions.assertEquals(pepeUpdate.cvu,operation.userInterested!!.directionForTransfer)
+
+
+    }
 
 }
