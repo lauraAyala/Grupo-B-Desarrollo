@@ -2,10 +2,7 @@ package modelTest
 
 import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.CryptoBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
-import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Aplication
-import ar.edu.unq.desapp.grupoB.backenddesappapi.model.CryptoQuote
-import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Operation
-import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -111,19 +108,26 @@ class AplicationTest {
         var user: UserBuilder = UserBuilder().builder()
         var crypto: CryptoBuilder = CryptoBuilder().builder()
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
-        user.saleCrypto(crypto,2,200.0)
+        var operationType = SaleOperation()
+        var operation = Operation(user,2,crypto,30.0,operationType)
+        operation = user.saleCrypto(operation)
+        var userUpdate = operation.userCreated
         var user2: UserBuilder = UserBuilder().builder()
+        user2.withDirectionWallet("xxx")
         var crypto2: CryptoBuilder = CryptoBuilder().builder()
         crypto2.withTypeCrypto(TypeCrypto.ALICEUSDT)
-        user2.buyCrypto(crypto,2,300.0)
+        var operationType2= BuyOperation()
+        var operation2 = Operation(user, 2,crypto,30.0,operationType2)
+        operation2 = user2.buyCrypto(operation2)
+        var userUpdate2 = operation2.userCreated
 
         var operations :ArrayList<Operation> = ArrayList()
-        operations.addAll(user.operations)
-        operations.addAll(user2.operations)
+        operations.addAll(userUpdate!!.operations)
+        operations.addAll(userUpdate2!!.operations)
 
         var app: Aplication = Aplication()
-        app.registerUser(user)
-        app.registerUser(user2)
+        app.registerUser(userUpdate)
+        app.registerUser(userUpdate2)
 
         Assertions.assertEquals(app.intentionsActiveOfSaleAndBuyCryptos().size,  2)
         Assertions.assertTrue(app.intentionsActiveOfSaleAndBuyCryptos().containsAll(operations))
