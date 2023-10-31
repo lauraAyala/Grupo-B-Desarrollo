@@ -2,10 +2,10 @@ package modelTest
 
 import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.CryptoBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
-import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Operation
-import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
 class UserTest {
 
@@ -63,8 +63,10 @@ class UserTest {
         var user: UserBuilder = UserBuilder().builder()
         var crypto: CryptoBuilder = CryptoBuilder().builder()
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
-        user.saleCrypto(crypto,2,200.0)
-        var operation: Operation = user.operations.get(0)
+        var operationType= SaleOperation()
+        var operation = Operation(user, 2,crypto,30.0,operationType)
+        user.saleCrypto(operation)
+        operation = user.operations.get(0)
 
         Assertions.assertEquals(user.operations.size,1)
         Assertions.assertEquals(operation.crypto, crypto)
@@ -75,10 +77,14 @@ class UserTest {
     fun userCreatedOperationOfTypeBuy() {
 
         var user: UserBuilder = UserBuilder().builder()
+        user.withDirectionWallet("xxx")
         var crypto: CryptoBuilder = CryptoBuilder().builder()
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
-        user.buyCrypto(crypto,2,200.0)
-        var operation: Operation = user.operations.get(0)
+        var operationType= BuyOperation()
+        var operation = Operation(user, 2,crypto,30.0,operationType)
+        user.buyCrypto(operation)
+        operation = user.operations.get(0)
+        //var userUpdate = operation.userCreated
 
         Assertions.assertEquals(user.operations.size,1)
         Assertions.assertEquals(operation.crypto, crypto)
@@ -91,10 +97,12 @@ class UserTest {
         var user: UserBuilder = UserBuilder().builder()
         var crypto: CryptoBuilder = CryptoBuilder().builder()
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
-        user.canceledCrypto(crypto,2,200.0)
-        var operation: Operation = user.operations.get(0)
+        var operationType= CancelOperation()
+        var operation = Operation(user, 2,crypto,30.0,operationType)
+        operation = user.canceledCrypto(operation)
+        var userUpdate = operation.userCreated
 
-        Assertions.assertEquals(user.operations.size,1)
+        Assertions.assertEquals(userUpdate!!.operations.size,1)
         Assertions.assertEquals(operation.crypto, crypto)
         Assertions.assertEquals(operation.userCreated, user)
     }
@@ -105,15 +113,15 @@ class UserTest {
         var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
         var operativeDate = LocalDateTime.now()
         var ALICEUSDT = TypeCrypto.ALICEUSDT
-        var crypto = Crypto(pepe,20.0,operativeDate,ALICEUSDT)
-        var operationType= OperationType()
+        var crypto = Crypto(20.0,operativeDate,ALICEUSDT)
+        var operationType= BuyOperation()
         var operation = Operation(pepe, 2,crypto,30.0,operationType)
-        var userUpdate = pepe.buyCrypto(crypto,2,200.0)
-        var operationUpdate: Operation = userUpdate.operations.get(0)
+        var operationUpdate = pepe.buyCrypto(operation)
 
-        Assertions.assertEquals(userUpdate.directionWallet,operationUpdate.direction)
-        Assertions.assertEquals(userUpdate.reception,true)
-        Assertions.assertEquals(userUpdate.operations.size,1)
+
+        Assertions.assertEquals(pepe.directionWallet,operationUpdate.direction)
+        Assertions.assertEquals(pepe.reception,true)
+        Assertions.assertEquals(pepe.operations.size,1)
 
     }
 
@@ -123,16 +131,18 @@ class UserTest {
         var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
         var operativeDate = LocalDateTime.now()
         var ALICEUSDT = TypeCrypto.ALICEUSDT
-        var crypto = Crypto(pepe,20.0,operativeDate,ALICEUSDT)
+        var crypto = Crypto(20.0,operativeDate,ALICEUSDT)
         var operationType= SaleOperation()
         var operation = Operation(pepe, 2,crypto,30.0,operationType)
         operation = operation.updateUserInterested(jose)
-        var pepeUpdate = pepe.saleCrypto(crypto,2,200.0)
+        var operationUpdate = pepe.saleCrypto(operation)
        // var operationUpdate: Operation = pepeUpdate.operations.get(0)
 
-       Assertions.assertEquals(pepeUpdate.cvu,operation.userInterested!!.directionForTransfer)
+       Assertions.assertEquals(pepe.cvu,operation.userInterested!!.directionForTransfer)
+
 
 
     }
+
 
 }
