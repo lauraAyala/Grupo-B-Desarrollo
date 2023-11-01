@@ -37,6 +37,11 @@ open class User () : Serializable{
     var countOperations = 0
     @Transient
     var reception = false
+    @Transient
+    var directionForTransfer:String?=null
+    @Transient
+    var point = 0
+
 
     constructor(nameU: String, lastNameU:String, emailU: String, directionU:String, passwordU:String, cvu:String, directionWalletU: String) : this(){
 
@@ -56,32 +61,28 @@ open class User () : Serializable{
     }
 
 
-    fun saleCrypto(crypto: Crypto, cantNominal:Int, amount:Double): User {
+    fun saleCrypto(operation: Operation): Operation {
 
-        var operationType = SaleOperation()
-        var operation = Operation(this,cantNominal,crypto,amount,operationType)
+
         this.operations.add(operation)
         //this.countOperations +=1
-        operation.processAction()
-        return this
+
+        return operation.processAction()
     }
 
-    fun buyCrypto(crypto: Crypto, cantNominal:Int, amount:Double): User {
+    fun buyCrypto(operation: Operation): Operation{
 
-        var operationType = BuyOperation()
-        var operation = Operation(this,cantNominal,crypto,amount,operationType)
         this.operations.add(operation)
-        this.countOperations +=1
-        return this
+        //this.countOperations +=1
+        var operationUpdate = operation.updateUserCreated(this)
+        return operationUpdate.processAction()
     }
 
-    fun canceledCrypto(crypto: Crypto, cantNominal:Int, amount:Double): User {
+    fun canceledCrypto(operation: Operation): Operation {
 
-        var operationType = CancelOperation()
-        var operation = Operation(this,cantNominal,crypto,amount,operationType)
         this.operations.add(operation)
-        this.countOperations +=1
-        return this
+       // this.countOperations +=1
+        return operation.processAction()
     }
 
     fun updatReception() {
@@ -98,5 +99,13 @@ open class User () : Serializable{
         user.updatReception()
         this.directionForTransfer = user.cvu
 
+    }
+
+    fun sustractPoint(operation: Operation): Operation {
+
+        if(this.point != 0) {
+            this.point -= 20
+        }
+        return operation.updateUserCreated(this)
     }
 }

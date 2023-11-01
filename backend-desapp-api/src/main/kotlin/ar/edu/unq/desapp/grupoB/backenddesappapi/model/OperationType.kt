@@ -8,6 +8,8 @@ import javax.persistence.Table
 open class OperationType {
 
    var type: String? =null
-     open fun realizeAction(operation: Operation) {}
+     open fun realizeAction(operation: Operation) : Operation {
+         return operation
+     }
 
 }
