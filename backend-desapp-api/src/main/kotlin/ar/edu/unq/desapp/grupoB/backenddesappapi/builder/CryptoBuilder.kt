@@ -18,13 +18,6 @@ class CryptoBuilder : Crypto() {
         this.quote = amount
         return this
     }
-
-    fun withDate(date: LocalDateTime): Crypto {
-
-        this.operativeDate = date
-        return this
-    }
-
     fun withTypeCrypto(typeCrypto: TypeCrypto): Crypto {
 
         this.typeCrypto = typeCrypto

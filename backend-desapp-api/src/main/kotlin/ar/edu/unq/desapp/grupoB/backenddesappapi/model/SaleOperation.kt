@@ -8,7 +8,7 @@ import javax.persistence.Entity
 class SaleOperation : OperationType() {
 
 
-    val typeOperation = "Sale"
+    override val type = "Sale"
     override fun realizeAction(operation: Operation) : Operation {
 
 

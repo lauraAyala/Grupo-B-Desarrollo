@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoB.backenddesappapi.service
 
 import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Crypto
+import ar.edu.unq.desapp.grupoB.backenddesappapi.model.Operation
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -42,15 +43,15 @@ class UserService {
         return repo.getOne(id)
     }
 
-    fun buyOperation(user: User, crypto: Crypto, count:Int, quote:Double): User {
+    fun buyOperation(user:User,operation: Operation): Operation {
 
-        return user.buyCrypto(crypto,count,quote)
+        return user.buyCrypto(operation)
 
     }
 
-    fun saleCrypto(user: User, crypto: Crypto, countNominal: Int, quote: Double): User {
+    fun saleCrypto(user: User, operation: Operation): Operation {
 
-        return user.saleCrypto(crypto,countNominal,quote)
+        return user.saleCrypto(operation)
 
     }
 }

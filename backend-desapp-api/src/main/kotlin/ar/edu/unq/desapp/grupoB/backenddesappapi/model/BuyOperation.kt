@@ -7,7 +7,7 @@ import javax.persistence.Entity
 
 class BuyOperation : OperationType() {
 
-    val typeOperation = "Buy"
+    override val type = "Buy"
     override fun realizeAction(operation: Operation) : Operation {
 
 

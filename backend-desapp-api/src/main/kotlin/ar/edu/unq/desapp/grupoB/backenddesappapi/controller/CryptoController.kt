@@ -41,7 +41,7 @@ class CryptoController {
         println(user)
         println(typeCrypto)
         var operativeDate = LocalDateTime.now()
-        var cryptoUpdate = Crypto(crypto.quote,operativeDate,typeCrypto)
+        var cryptoUpdate = Crypto(crypto.quote,typeCrypto)
         println(cryptoUpdate)
         cryptoUpdate = service.createCrypto(cryptoUpdate)
         var cryptoDTO = CryptoDTO(cryptoUpdate.typeCrypto!!.name, cryptoUpdate.quote!!)

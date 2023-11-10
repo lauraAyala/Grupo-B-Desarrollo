@@ -26,16 +26,6 @@ class CryptoTest {
         crypto.withQuote(100.00)
         Assertions.assertEquals(crypto.quote, 100.00)
     }
-
-    @Test
-    fun cryptoCreatedWithDate() {
-
-        var crypto : CryptoBuilder = CryptoBuilder().builder()
-        var date : LocalDateTime = LocalDateTime.now()
-        crypto.withDate(date)
-        Assertions.assertEquals(crypto.operativeDate, date)
-    }
-
     @Test
     fun cryptoCreatedOfTypeALICEUSDT() {
 

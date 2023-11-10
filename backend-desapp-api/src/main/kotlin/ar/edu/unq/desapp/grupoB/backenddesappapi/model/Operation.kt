@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
+import java.time.LocalDateTime
 import javax.persistence.*
 import kotlin.jvm.Transient
 
@@ -27,9 +28,11 @@ class Operation() {
     var operationType: OperationType?=null
    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userInterested_id")
-    var userInterested: User?= null
-    @Column
+    var userInterested :User? = null
+    @Transient
     var direction:String? =null
+    @Column
+    val operativeDate: LocalDateTime = LocalDateTime.now()
 
     constructor(user: User, cantNominal:Int, crypto: Crypto, amount:Double, operationType: OperationType) :this(){
 
@@ -39,6 +42,7 @@ class Operation() {
         this.amount = amount
         this.operationType = operationType
         this.nameOperation = operationType.type
+        this.userInterested = null
 
     }
 

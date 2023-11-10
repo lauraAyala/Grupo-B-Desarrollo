@@ -44,10 +44,16 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	//testImplementation("org.springframework.boot:spring-boot-starter-test")
 	//testImplementation("org.springframework.security:spring-security-test")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:5.3.29")
+	//implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:5.3.29")
 	runtimeOnly("org.postgresql:postgresql")
+	implementation("org.jscience:jscience:4.3.1")
+	testImplementation ("com.tngtech.archunit:archunit-junit5:0.14.1")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+		testImplementation("junit:junit:4.12")
+	}
 }
 
 tasks.withType<KotlinCompile> {

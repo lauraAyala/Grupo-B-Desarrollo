@@ -113,7 +113,7 @@ class UserTest {
         var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
         var operativeDate = LocalDateTime.now()
         var ALICEUSDT = TypeCrypto.ALICEUSDT
-        var crypto = Crypto(20.0,operativeDate,ALICEUSDT)
+        var crypto = Crypto(20.0,ALICEUSDT)
         var operationType= BuyOperation()
         var operation = Operation(pepe, 2,crypto,30.0,operationType)
         var operationUpdate = pepe.buyCrypto(operation)
@@ -131,7 +131,7 @@ class UserTest {
         var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
         var operativeDate = LocalDateTime.now()
         var ALICEUSDT = TypeCrypto.ALICEUSDT
-        var crypto = Crypto(20.0,operativeDate,ALICEUSDT)
+        var crypto = Crypto(20.0,ALICEUSDT)
         var operationType= SaleOperation()
         var operation = Operation(pepe, 2,crypto,30.0,operationType)
         operation = operation.updateUserInterested(jose)

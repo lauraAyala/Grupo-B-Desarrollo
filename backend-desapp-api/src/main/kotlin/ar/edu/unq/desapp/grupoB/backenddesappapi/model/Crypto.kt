@@ -17,18 +17,13 @@ open class Crypto()  : Serializable {
     @Column
     var quote:Double?= null
     @Column
-    var operativeDate:LocalDateTime?= null
-    @Column
     var typeCrypto: TypeCrypto? = null
-    /*@JsonIgnore
-    @OneToMany(cascade = arrayOf(CascadeType.ALL), mappedBy =  "crypto")*/
     @Transient
     var operations:MutableList<Operation> = ArrayList()
 
-        constructor( quote : Double, operativeDate : LocalDateTime, typeCrypto: TypeCrypto) : this(){
+        constructor( quote : Double, typeCrypto: TypeCrypto) : this(){
 
             this.quote = quote
-            this.operativeDate = operativeDate
             this.typeCrypto = typeCrypto
         }
 }
