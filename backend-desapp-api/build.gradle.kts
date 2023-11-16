@@ -37,6 +37,7 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
 	//implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -46,7 +47,6 @@ dependencies {
 	//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 	//testImplementation("org.springframework.boot:spring-boot-starter-test")
 	//testImplementation("org.springframework.security:spring-security-test")
-	//implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:5.3.29")
 	runtimeOnly("org.postgresql:postgresql")
 	implementation("org.jscience:jscience:4.3.1")
 	testImplementation ("com.tngtech.archunit:archunit-junit5:0.14.1")
