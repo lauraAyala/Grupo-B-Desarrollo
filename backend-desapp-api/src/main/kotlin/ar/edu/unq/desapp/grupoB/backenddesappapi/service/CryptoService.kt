@@ -13,6 +13,7 @@ class CryptoService {
     @Autowired
     lateinit var repo : CryptoRepository
 
+
     fun createCrypto(crypto : Crypto) : Crypto {
         //gruporepo.save(crypto)
         return  repo.save(crypto)

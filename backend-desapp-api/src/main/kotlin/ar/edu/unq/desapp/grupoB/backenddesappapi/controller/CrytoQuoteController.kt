@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.dto.CryptoQuoteDTO
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.CryptoQuote
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import ar.edu.unq.desapp.grupoB.backenddesappapi.request.CryptoQuoteRequest
+import ar.edu.unq.desapp.grupoB.backenddesappapi.service.BinanceProxyService
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.CryptoQuoteService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -18,10 +19,20 @@ class CrytoQuoteController {
 
     @Autowired
     lateinit var serviceCryptoQuote: CryptoQuoteService
+    @Autowired
+    lateinit var benance :BinanceProxyService
 
     @GetMapping("/quotationOfCryptoActives")
     fun getQuotationOfCryptoActives() : List<CryptoQuote>{
         return serviceCryptoQuote.allCryptoQuote()
+    }
+
+    @GetMapping("/cryptoType")
+    fun getCryptoType(@RequestBody typeCrypto : String) : ResponseEntity<TypeCrypto>{
+
+        var type= benance.getCryptoCurrencyValue(typeCrypto)
+
+        return ResponseEntity(type, HttpStatus.ACCEPTED)
     }
 
     @PostMapping("/addCryptoQuote")

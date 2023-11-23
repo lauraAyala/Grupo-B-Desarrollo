@@ -8,6 +8,7 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import ar.edu.unq.desapp.grupoB.backenddesappapi.request.CryptoQuoteRequest
 import ar.edu.unq.desapp.grupoB.backenddesappapi.request.CryptoRequest
 import ar.edu.unq.desapp.grupoB.backenddesappapi.request.TypeCryptoRequest
+import ar.edu.unq.desapp.grupoB.backenddesappapi.service.BinanceProxyService
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.CryptoService
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +27,9 @@ class CryptoController {
     lateinit var service : CryptoService
     @Autowired
     lateinit var serviceUser : UserService
+    @Autowired
+    lateinit var binance : BinanceProxyService
+
 
 
 
@@ -33,6 +37,7 @@ class CryptoController {
     fun getCryptos() : List<Crypto>{
         return service.allCryptos()
     }
+
 
     @PostMapping("/addCrypto")
     fun saveCrypto(@RequestBody crypto: CryptoRequest) : ResponseEntity<CryptoDTO> {
