@@ -26,4 +26,10 @@ open class Crypto()  : Serializable {
             this.quote = quote
             this.typeCrypto = typeCrypto
         }
+
+    fun isTypeCrypto(typeCrypto: TypeCrypto?): Boolean {
+
+        return this.typeCrypto == typeCrypto
+
+    }
 }

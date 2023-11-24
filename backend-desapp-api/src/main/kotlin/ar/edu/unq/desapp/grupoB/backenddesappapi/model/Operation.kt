@@ -69,4 +69,10 @@ class Operation() {
 
         return this
     }
+
+    fun isTypeCrypto(typeCrypto: TypeCrypto?): Boolean {
+
+        return crypto!!.isTypeCrypto(typeCrypto)
+
+    }
 }

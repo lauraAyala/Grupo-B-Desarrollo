@@ -1,8 +1,9 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import net.bytebuddy.asm.Advice.AllArguments
 import java.io.Serializable
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.persistence.*
 import kotlin.jvm.Transient
 @Entity
@@ -41,6 +42,8 @@ open class User () : Serializable{
     var directionForTransfer:String?=null
     @Transient
     var point = 0
+    @Transient
+    var dolarPrice =0.0
 
 
     constructor(nameU: String, lastNameU:String, emailU: String, directionU:String, passwordU:String, cvu:String, directionWalletU: String) : this(){
@@ -107,5 +110,66 @@ open class User () : Serializable{
             this.point -= 20
         }
         return operation.updateUserCreated(this)
+    }
+
+    private fun sumAmountArgOperations(operationsOfCrypto: ArrayList<Operation>): Double {
+
+        var amountArg = 0.0
+        for (operation in operationsOfCrypto){
+
+            amountArg += operation.amount!!
+
+        }
+
+        return amountArg
+
+    }
+
+    private fun sumAmountDolarOperations(operationsOfCrypto: ArrayList<Operation>): Double {
+
+        var amountDolar = 0.0
+        for (operation in operationsOfCrypto){
+
+            amountDolar += (operation.amount!! *  this.dolarPrice)
+
+        }
+
+        return amountDolar
+
+    }
+
+    private fun sumCantNominalCrypto(operationsOfCrypto: ArrayList<Operation>): Int {
+
+        var cantNominal = 0
+        for (operation in operationsOfCrypto){
+
+            cantNominal += operation.cantNominal!!
+
+        }
+
+        return cantNominal
+
+    }
+
+    fun reportVolumOperatorOfCrypto(crypto: Crypto, date1: LocalDate, date2 : LocalDate): ReportCrypto{
+
+        var operationsOfCrypto : ArrayList<Operation> = ArrayList()
+        for (operation in this.operations){
+
+            if( (operation.operativeDate.toLocalDate() <= date1 || operation.operativeDate.toLocalDate() <= date2) && operation.isTypeCrypto(crypto.typeCrypto)){
+
+                operationsOfCrypto.add(operation)
+            }
+        }
+
+        var operativeDate = LocalDateTime.now()
+        var amountArg:Double = this.sumAmountArgOperations(operationsOfCrypto)
+        var amountDolar: Double = this.sumAmountDolarOperations(operationsOfCrypto)
+        var cryptoType = crypto.typeCrypto
+        var cantNominal = this.sumCantNominalCrypto(operationsOfCrypto)
+        var currentQuote = 1000.00
+
+        return ReportCrypto(operativeDate,amountDolar,amountArg,cryptoType!!,cantNominal,currentQuote,amountArg)
+
     }
 }
