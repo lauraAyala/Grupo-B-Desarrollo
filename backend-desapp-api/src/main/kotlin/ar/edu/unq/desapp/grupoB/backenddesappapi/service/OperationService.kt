@@ -4,7 +4,6 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.model.*
 import ar.edu.unq.desapp.grupoB.backenddesappapi.repository.OperationRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.lang.reflect.Array
 
 @Service
 class OperationService {
@@ -40,5 +39,22 @@ class OperationService {
         return BuyOperation()
 
     }
+
+    fun getOperationOf(user: User): ArrayList<Operation> {
+
+        var operations = this.allOperations()
+        var operationsUpdate : ArrayList<Operation> =  ArrayList()
+        for (operation in operations){
+
+            if (operation.userCreated == user){
+
+                operationsUpdate.add(operation)
+            }
+        }
+
+        return operationsUpdate
+
+    }
+
 
 }

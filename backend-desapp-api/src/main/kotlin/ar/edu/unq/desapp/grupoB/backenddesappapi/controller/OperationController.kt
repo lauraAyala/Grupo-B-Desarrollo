@@ -1,12 +1,16 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.controller
 
 import ar.edu.unq.desapp.grupoB.backenddesappapi.dto.OperationDTO
+import ar.edu.unq.desapp.grupoB.backenddesappapi.dto.UserDTO
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.*
 import ar.edu.unq.desapp.grupoB.backenddesappapi.request.OperationRequest
+import ar.edu.unq.desapp.grupoB.backenddesappapi.request.UserRequest
+import ar.edu.unq.desapp.grupoB.backenddesappapi.request.operationDatesRequest
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.CryptoService
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.OperationService
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -26,6 +30,7 @@ class OperationController {
     lateinit var serviceCrypto: CryptoService
 
     @GetMapping("/intentionsActives")
+    //@Cacheable("getIntentionsActives")
     fun getIntentionsActives() : List<OperationDTO>{
 
         var operationsDTO : ArrayList<OperationDTO> = ArrayList()
@@ -70,5 +75,17 @@ class OperationController {
         var operationDTO = OperationDTO(operationType.type!!,operationRequest.typeCrypto, operationRequest.user)
         return ResponseEntity(operationDTO, HttpStatus.CREATED)
     }
+
+    @PostMapping("/getOperationsDates")
+    fun saveUser(@RequestBody operationDatesRequest : operationDatesRequest) : ResponseEntity<ReportCrypto> {
+        var user = serviceUser.recoverUser(operationDatesRequest.user.toLong())
+        var crypto = serviceCrypto.findCryptoOF(operationDatesRequest.crypto)
+        var operations = service.getOperationOf(user)
+        user.operations.addAll(operations)
+        var report = user.reportVolumOperatorOfCrypto(crypto,operationDatesRequest.firstDate, operationDatesRequest.secondDate)
+
+        return ResponseEntity(report, HttpStatus.OK)
+    }
+
 
 }

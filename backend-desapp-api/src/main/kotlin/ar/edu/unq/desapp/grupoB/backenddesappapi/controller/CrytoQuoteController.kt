@@ -7,6 +7,7 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.request.CryptoQuoteRequest
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.BinanceProxyService
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.CryptoQuoteService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

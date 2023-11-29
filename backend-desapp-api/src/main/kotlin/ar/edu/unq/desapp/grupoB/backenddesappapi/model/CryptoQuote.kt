@@ -1,9 +1,11 @@
 package ar.edu.unq.desapp.grupoB.backenddesappapi.model
 
+import lombok.NoArgsConstructor
+import java.io.Serializable
 import javax.persistence.*
-
+@NoArgsConstructor
 @Entity
-class CryptoQuote {
+class CryptoQuote : Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

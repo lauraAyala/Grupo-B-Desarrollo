@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.model.CryptoQuote
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import ar.edu.unq.desapp.grupoB.backenddesappapi.repository.CryptoQuoteRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
@@ -32,6 +33,8 @@ class CryptoQuoteService {
 
         return cryptos
     }
+
+    //@Cacheable("allCryptoQuote")
     fun allCryptoQuote(): List<CryptoQuote>{
 
         /*var cryptos : ArrayList<TypeCrypto> = this.getBinanceCryptos()

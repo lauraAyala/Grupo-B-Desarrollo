@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.UserService
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.web.bind.annotation.*
 import javax.persistence.Id
 
@@ -23,6 +24,7 @@ class UserController {
     }
 
     @GetMapping("/users")
+    //@Cacheable("getUsers")
     fun getUsers() : List<User>{
         return serviceUser.allUsers()
     }
@@ -44,4 +46,7 @@ class UserController {
     }
     @GetMapping("/user/{id}")
     fun findById(@PathVariable id: Int) = serviceUser.recoverUser(id.toLong())
+
+
+
 }
