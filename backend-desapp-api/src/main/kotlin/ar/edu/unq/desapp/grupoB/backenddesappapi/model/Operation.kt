@@ -32,9 +32,9 @@ class Operation() {
     @Transient
     var direction:String? =null
     @Column
-    val operativeDate: LocalDateTime = LocalDateTime.now()
+    val operativeDate: LocalDateTime = null
 
-    constructor(user: User, cantNominal:Int, crypto: Crypto, amount:Double, operationType: OperationType) :this(){
+    constructor(user: User?, cantNominal:Int, crypto: Crypto, amount:Double, operationType: OperationType) :this(){
 
         this.userCreated=user
         this.cantNominal=cantNominal
@@ -43,16 +43,16 @@ class Operation() {
         this.operationType = operationType
         this.nameOperation = operationType.type
         this.userInterested = null
-
+        this.operativeDate = LocalDateTime.now()
     }
 
-    fun updateUserInterested(user: User): Operation{
+    fun updateUserInterested(user: User): Operation? {
 
         this.userInterested=user
 
         return this
     }
-    fun processAction() : Operation{
+    fun processAction() : Operation? {
 
         return (this.operationType!!.realizeAction(this))
 
@@ -63,13 +63,18 @@ class Operation() {
         this.direction = direction
     }
 
-    fun updateUserCreated(user: User): Operation {
+    fun updateUserCreated(user: User): Operation? {
 
         this.userCreated = user
 
         return this
     }
 
+    fun updateOperativeDate(date: LocalDateTime?) {
+
+         this.operativeDate = date
+    }
+    
     fun isTypeCrypto(typeCrypto: TypeCrypto?): Boolean {
 
         return crypto!!.isTypeCrypto(typeCrypto)
