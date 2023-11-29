@@ -53,4 +53,10 @@ class Aplication {
         }
         return intentionsActives
     }
+
+    fun cancelatedOperation(operation: Operation){
+
+        var cancelOperation = Operation(null,operation.cantNominal!!,operation.crypto!!,operation.amount!!, CancelOperation())
+        cancelOperation.processAction()
+    }
 }
