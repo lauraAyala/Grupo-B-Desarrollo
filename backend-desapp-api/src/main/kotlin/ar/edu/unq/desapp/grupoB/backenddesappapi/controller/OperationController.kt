@@ -36,7 +36,7 @@ class OperationController {
         var operationsDTO : ArrayList<OperationDTO> = ArrayList()
         for(i in service.allOperations()){
             var user  : Int = i.userCreated!!.id!!.toInt()
-            var operationDTO : OperationDTO = OperationDTO(i.nameOperation!!, i.nameOperation!!,user)
+            var operationDTO : OperationDTO = OperationDTO(i.nameOperation!!, i.crypto!!.typeCrypto!!.name,user)
             operationsDTO.add(operationDTO)
 
         }

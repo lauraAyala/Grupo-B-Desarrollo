@@ -4,10 +4,10 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.dto.CryptoQuoteDTO
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.CryptoQuote
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.TypeCrypto
 import ar.edu.unq.desapp.grupoB.backenddesappapi.request.CryptoQuoteRequest
+import ar.edu.unq.desapp.grupoB.backenddesappapi.request.QuotitationRequest
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.BinanceProxyService
 import ar.edu.unq.desapp.grupoB.backenddesappapi.service.CryptoQuoteService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,6 +20,7 @@ class CrytoQuoteController {
 
     @Autowired
     lateinit var serviceCryptoQuote: CryptoQuoteService
+
     @Autowired
     lateinit var benance :BinanceProxyService
 
@@ -43,6 +44,13 @@ class CrytoQuoteController {
         serviceCryptoQuote.createCryptoQuote(cryptoQuoteUpdate)
         var cryptoQuoteDTO = CryptoQuoteDTO(cryptoQuote.typeQuote,cryptoQuote.quote)
         return ResponseEntity(cryptoQuoteDTO, HttpStatus.CREATED)
+    }
+
+    @PostMapping("/quotitationAtDate")
+    fun quotitationAtDate(@RequestBody quotitationRequest: QuotitationRequest) : List<CryptoQuoteDTO> {
+        var typeCrypto = TypeCrypto.valueOf(quotitationRequest.crypto)
+        var cryptosDTO = serviceCryptoQuote.getQuotitationAtDate(typeCrypto,quotitationRequest.date)
+        return cryptosDTO
     }
 
 }
