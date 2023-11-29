@@ -5,7 +5,9 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 class UserTest {
 
@@ -99,10 +101,10 @@ class UserTest {
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
         var operationType= CancelOperation()
         var operation = Operation(user, 2,crypto,30.0,operationType)
-        operation = user.canceledCrypto(operation)
+        operation = user.canceledCrypto(operation)!!
         var userUpdate = operation.userCreated
 
-        Assertions.assertEquals(userUpdate!!.operations.size,1)
+        Assertions.assertEquals(userUpdate!!.operations.size,0)
         Assertions.assertEquals(operation.crypto, crypto)
         Assertions.assertEquals(operation.userCreated, user)
     }
@@ -119,7 +121,7 @@ class UserTest {
         var operationUpdate = pepe.buyCrypto(operation)
 
 
-        Assertions.assertEquals(pepe.directionWallet,operationUpdate.direction)
+        Assertions.assertEquals(pepe.directionWallet,operationUpdate!!.direction)
         Assertions.assertEquals(pepe.reception,true)
         Assertions.assertEquals(pepe.operations.size,1)
 
@@ -129,12 +131,11 @@ class UserTest {
     fun userMakesThesaleOfCrypto(){
         var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
         var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
-        var operativeDate = LocalDateTime.now()
         var ALICEUSDT = TypeCrypto.ALICEUSDT
         var crypto = Crypto(20.0,ALICEUSDT)
         var operationType= SaleOperation()
         var operation = Operation(pepe, 2,crypto,30.0,operationType)
-        operation = operation.updateUserInterested(jose)
+        operation = operation.updateUserInterested(jose)!!
         var operationUpdate = pepe.saleCrypto(operation)
        // var operationUpdate: Operation = pepeUpdate.operations.get(0)
 
@@ -144,5 +145,107 @@ class UserTest {
 
     }
 
+    @Test
+    fun verifyThatTheUserIfTheyNeverMadeAOperationsHas0ReputationPoints(){
+
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+
+        Assertions.assertEquals(pepe.operations.size,0)
+        Assertions.assertEquals(pepe.countOperations,0)
+        Assertions.assertEquals(pepe.point, 0)
+    }
+
+    @Test
+    fun theUserPepeMakesASaleWithin30Minutes(){
+
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
+        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var operationType= SaleOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        operation = operation.updateUserInterested(jose)!!
+        var operationUpdate = pepe.saleCrypto(operation)
+
+        Assertions.assertEquals(pepe.operations.size,1)
+        Assertions.assertEquals(pepe.countOperations,1)
+        Assertions.assertEquals(pepe.point, 10)
+    }
+
+    @Test
+    fun theUserPepeMakesASaleAndExceeds30Minutes(){
+
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
+        var fecha = LocalDate.of(2023, 11, 30)
+        var hora = LocalTime.of( 15,20, 30)
+        var operativeDate = LocalDateTime.of(fecha, hora)
+        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var operationType= SaleOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        operation = operation.updateUserInterested(jose)!!
+        operation.updateOperativeDate(operativeDate)
+        var operationUpdate = pepe.saleCrypto(operation)
+
+        Assertions.assertEquals(pepe.operations.size,1)
+        Assertions.assertEquals(pepe.countOperations,1)
+        Assertions.assertEquals(pepe.point, 5)
+    }
+
+    @Test
+    fun theUserPepeMakesAPurchaseWithin30Minutes(){
+
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
+        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var operationType= BuyOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        operation = operation.updateUserInterested(jose)!!
+        var operationUpdate = pepe.buyCrypto(operation)
+
+        Assertions.assertEquals(pepe.operations.size,1)
+        Assertions.assertEquals(pepe.countOperations,1)
+        Assertions.assertEquals(pepe.point, 10)
+    }
+
+    @Test
+    fun theUserPepeMakesAPurchaseAndExceeds30Minutes(){
+
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
+        var fecha = LocalDate.of(2023, 11, 30)
+        var hora = LocalTime.of( 15,20, 30)
+        var operativeDate = LocalDateTime.of(fecha, hora)
+        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var operationType= BuyOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        operation = operation.updateUserInterested(jose)!!
+        operation.updateOperativeDate(operativeDate)
+        var operationUpdate = pepe.buyCrypto(operation)
+
+        Assertions.assertEquals(pepe.operations.size,1)
+        Assertions.assertEquals(pepe.countOperations,1)
+        Assertions.assertEquals(pepe.point, 5)
+    }
+
+    @Test
+    fun theUserPepeCanceledTheOperation(){
+
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        var jose = User("jose","Muñoz","jmuñoz@hotmail.com","florida 124","1234","290432253549202","wallet")
+        var fecha = LocalDate.of(2023, 11, 30)
+        var hora = LocalTime.of( 15,20, 30)
+        var operativeDate = LocalDateTime.of(fecha, hora)
+        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var operationType= CancelOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        operation = operation.updateUserInterested(jose)!!
+        operation.updateOperativeDate(operativeDate)
+        var operationUpdate = pepe.canceledCrypto(operation)
+
+        Assertions.assertEquals(pepe.operations.size,0)
+        Assertions.assertEquals(pepe.countOperations,0)
+        Assertions.assertEquals(pepe.point, 0)
+    }
 
 }
+
