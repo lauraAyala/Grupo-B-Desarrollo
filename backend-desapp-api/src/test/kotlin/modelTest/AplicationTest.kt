@@ -5,6 +5,9 @@ import ar.edu.unq.desapp.grupoB.backenddesappapi.builder.UserBuilder
 import ar.edu.unq.desapp.grupoB.backenddesappapi.model.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class AplicationTest {
 
@@ -110,7 +113,7 @@ class AplicationTest {
         crypto.withTypeCrypto(TypeCrypto.ALICEUSDT)
         var operationType = SaleOperation()
         var operation = Operation(user,2,crypto,30.0,operationType)
-        operation = user.saleCrypto(operation)
+        operation = user.saleCrypto(operation)!!
         var userUpdate = operation.userCreated
         var user2: UserBuilder = UserBuilder().builder()
         user2.withDirectionWallet("xxx")
@@ -118,7 +121,7 @@ class AplicationTest {
         crypto2.withTypeCrypto(TypeCrypto.ALICEUSDT)
         var operationType2= BuyOperation()
         var operation2 = Operation(user, 2,crypto,30.0,operationType2)
-        operation2 = user2.buyCrypto(operation2)
+        operation2 = user2.buyCrypto(operation2)!!
         var userUpdate2 = operation2.userCreated
 
         var operations :ArrayList<Operation> = ArrayList()
@@ -131,5 +134,35 @@ class AplicationTest {
 
         Assertions.assertEquals(app.intentionsActiveOfSaleAndBuyCryptos().size,  2)
         Assertions.assertTrue(app.intentionsActiveOfSaleAndBuyCryptos().containsAll(operations))
+    }
+
+    @Test
+    fun theAplicattionCanceledTheSale(){
+        var app: Aplication = Aplication()
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        pepe.updatePoints(50)
+        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var operationType= SaleOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        app.cancelatedOperation(operation)
+
+        Assertions.assertEquals(pepe.operations.size,0)
+        Assertions.assertEquals(pepe.countOperations,0)
+        Assertions.assertEquals(pepe.point, 50)
+    }
+
+    @Test
+    fun theAplicattionCanceledThePurchase(){
+        var app: Aplication = Aplication()
+        var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
+        pepe.updatePoints(50)
+        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var operationType= BuyOperation()
+        var operation = Operation(pepe, 2,crypto,30.0,operationType)
+        app.cancelatedOperation(operation)
+
+        Assertions.assertEquals(pepe.operations.size,0)
+        Assertions.assertEquals(pepe.countOperations,0)
+        Assertions.assertEquals(pepe.point, 50)
     }
 }
