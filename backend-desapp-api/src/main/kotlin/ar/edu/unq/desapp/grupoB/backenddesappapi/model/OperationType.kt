@@ -8,7 +8,7 @@ import javax.persistence.Table
 open class OperationType {
 
    open val type: String? =null
-     open fun realizeAction(operation: Operation) : Operation {
+     open fun realizeAction(operation: Operation) : Operation? {
          return operation
      }
 
