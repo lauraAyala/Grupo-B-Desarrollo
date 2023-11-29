@@ -8,16 +8,16 @@ import javax.persistence.Entity
 class BuyOperation : OperationType() {
 
     override val type = "Buy"
-    override fun realizeAction(operation: Operation) : Operation {
+    override fun realizeAction(operation: Operation) : Operation? {
 
-
+          var operationUpdate = operation
         if (operation.userCreated != null) {
-            var direction = operation.userCreated!!.directionWallet
-            operation.userCreated!!.updatReception()
-            operation.updateDirection(direction!!)
+            operationUpdate= (operation.userCreated!!.confirmPurchase(operation))
             println("Make the transfer")
+
         }
-       return operation
+
+       return operationUpdate
     }
 
 
