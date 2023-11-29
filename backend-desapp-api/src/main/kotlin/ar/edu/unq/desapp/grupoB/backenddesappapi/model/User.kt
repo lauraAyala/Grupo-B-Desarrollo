@@ -64,27 +64,21 @@ open class User () : Serializable{
     }
 
 
-    fun saleCrypto(operation: Operation): Operation {
-
+    fun saleCrypto(operation: Operation): Operation? {
 
         this.operations.add(operation)
-        //this.countOperations +=1
-
         return operation.processAction()
     }
 
-    fun buyCrypto(operation: Operation): Operation{
+    fun buyCrypto(operation: Operation): Operation? {
 
         this.operations.add(operation)
-        //this.countOperations +=1
         var operationUpdate = operation.updateUserCreated(this)
-        return operationUpdate.processAction()
+        return operationUpdate!!.processAction()
     }
 
-    fun canceledCrypto(operation: Operation): Operation {
-
-        this.operations.add(operation)
-       // this.countOperations +=1
+    fun canceledCrypto(operation: Operation): Operation? {
+        
         return operation.processAction()
     }
 
@@ -98,13 +92,17 @@ open class User () : Serializable{
         operation.processAction()
     }
 
-    fun makeTransfer(user: User){
-        user.updatReception()
-        this.directionForTransfer = user.cvu
+    fun makeTransfer(operation: Operation) : Operation? {
 
+        var  user = this.sumPoints(operation)
+        this.directionForTransfer = user!!.cvu
+        user.updatReception()
+        var updateOperation = operation.updateUserCreated(user)
+        return  updateOperation
     }
 
-    fun sustractPoint(operation: Operation): Operation {
+
+    fun sustractPoint(operation: Operation): Operation? {
 
         if(this.point != 0) {
             this.point -= 20
@@ -172,4 +170,37 @@ open class User () : Serializable{
         return ReportCrypto(operativeDate,amountDolar,amountArg,cryptoType!!,cantNominal,currentQuote,amountArg)
 
     }
+
+    fun sumPoints(operation: Operation): User? {
+
+        var  user = operation.userCreated
+        var date = operation.operativeDate
+        var currentDate: LocalDateTime = LocalDateTime.now()
+        var minuteDifference = ChronoUnit.MINUTES.between(currentDate,date) //currentDate.minute - date!!.minute
+        if (date!!.toLocalDate() == currentDate.toLocalDate() && date.hour == currentDate.hour && minuteDifference <= 30) {
+
+            user!!.point += 10
+        } else {
+
+            user!!.point += 5
+
+        }
+        return user
+    }
+
+    fun confirmPurchase(operation: Operation): Operation {
+
+        var direction = operation.userCreated!!.directionWallet
+        operation.userCreated!!.updatReception()
+        operation.updateDirection(direction!!)
+        var user :User? =  operation.userCreated!!.sumPoints(operation)
+        operation.updateUserCreated(user!!)
+        return operation
+    }
+
+    fun updatePoints(point: Int) {
+
+        this.point =+ point
+    }
+
 }
