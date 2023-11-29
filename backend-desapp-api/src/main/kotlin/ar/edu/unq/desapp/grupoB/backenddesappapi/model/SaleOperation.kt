@@ -9,14 +9,14 @@ class SaleOperation : OperationType() {
 
 
     override val type = "Sale"
-    override fun realizeAction(operation: Operation) : Operation {
+    override fun realizeAction(operation: Operation) : Operation? {
 
-
+            var updateOperation : Operation? = operation
         if (operation.userInterested != null) {
-            operation.userInterested?.makeTransfer(operation.userCreated!!)
+            updateOperation = (operation.userInterested?.makeTransfer(operation))
             println("Confirm reception")
         }
-       return operation
+       return updateOperation
     }
 
 }
