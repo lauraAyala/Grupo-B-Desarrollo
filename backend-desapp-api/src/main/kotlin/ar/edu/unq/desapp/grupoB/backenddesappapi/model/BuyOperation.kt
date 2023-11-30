@@ -8,7 +8,7 @@ import javax.persistence.Entity
 class BuyOperation : OperationType() {
 
     override val type = "Buy"
-    override fun realizeAction(operation: Operation) : Operation? {
+    override fun realizeAction(operation: Operation) : Operation{
 
           var operationUpdate = operation
         if (operation.userCreated != null) {

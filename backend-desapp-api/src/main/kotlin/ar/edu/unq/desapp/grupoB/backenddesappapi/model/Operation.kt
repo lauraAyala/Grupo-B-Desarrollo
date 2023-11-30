@@ -32,7 +32,7 @@ class Operation() {
     @Transient
     var direction:String? =null
     @Column
-    val operativeDate: LocalDateTime = null
+    var operativeDate: LocalDateTime? = null
 
     constructor(user: User?, cantNominal:Int, crypto: Crypto, amount:Double, operationType: OperationType) :this(){
 
@@ -52,7 +52,7 @@ class Operation() {
 
         return this
     }
-    fun processAction() : Operation? {
+    fun processAction() : Operation {
 
         return (this.operationType!!.realizeAction(this))
 
@@ -63,7 +63,7 @@ class Operation() {
         this.direction = direction
     }
 
-    fun updateUserCreated(user: User): Operation? {
+    fun updateUserCreated(user: User): Operation {
 
         this.userCreated = user
 

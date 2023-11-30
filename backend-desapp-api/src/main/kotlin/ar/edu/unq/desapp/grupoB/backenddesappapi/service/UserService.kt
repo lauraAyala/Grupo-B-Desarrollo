@@ -43,13 +43,13 @@ class UserService {
         return repo.getOne(id)
     }
 
-    fun buyOperation(user:User,operation: Operation): Operation {
+    fun buyOperation(user:User,operation: Operation): Operation? {
 
         return user.buyCrypto(operation)
 
     }
 
-    fun saleCrypto(user: User, operation: Operation): Operation {
+    fun saleCrypto(user: User, operation: Operation): Operation? {
 
         return user.saleCrypto(operation)
 

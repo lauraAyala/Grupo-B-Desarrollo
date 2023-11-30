@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import javax.persistence.*
 import kotlin.jvm.Transient
 @Entity
@@ -64,20 +65,20 @@ open class User () : Serializable{
     }
 
 
-    fun saleCrypto(operation: Operation): Operation? {
+    fun saleCrypto(operation: Operation): Operation {
 
         this.operations.add(operation)
         return operation.processAction()
     }
 
-    fun buyCrypto(operation: Operation): Operation? {
+    fun buyCrypto(operation: Operation): Operation {
 
         this.operations.add(operation)
         var operationUpdate = operation.updateUserCreated(this)
         return operationUpdate!!.processAction()
     }
 
-    fun canceledCrypto(operation: Operation): Operation? {
+    fun canceledCrypto(operation: Operation): Operation {
         
         return operation.processAction()
     }
@@ -92,12 +93,12 @@ open class User () : Serializable{
         operation.processAction()
     }
 
-    fun makeTransfer(operation: Operation) : Operation? {
+    fun makeTransfer(operation: Operation) : Operation {
 
         var  user = this.sumPoints(operation)
         this.directionForTransfer = user!!.cvu
         user.updatReception()
-        var updateOperation = operation.updateUserCreated(user)
+        var updateOperation : Operation = operation.updateUserCreated(user)
         return  updateOperation
     }
 
@@ -154,7 +155,7 @@ open class User () : Serializable{
         var operationsOfCrypto : ArrayList<Operation> = ArrayList()
         for (operation in this.operations){
 
-            if( (operation.operativeDate.toLocalDate() <= date1 || operation.operativeDate.toLocalDate() <= date2) && operation.isTypeCrypto(crypto.typeCrypto)){
+            if( (operation.operativeDate!!.toLocalDate() <= date1 || operation.operativeDate!!.toLocalDate() <= date2) && operation.isTypeCrypto(crypto.typeCrypto)){
 
                 operationsOfCrypto.add(operation)
             }
@@ -176,7 +177,7 @@ open class User () : Serializable{
         var  user = operation.userCreated
         var date = operation.operativeDate
         var currentDate: LocalDateTime = LocalDateTime.now()
-        var minuteDifference = ChronoUnit.MINUTES.between(currentDate,date) //currentDate.minute - date!!.minute
+        var minuteDifference = ChronoUnit.MINUTES.between(currentDate,date)
         if (date!!.toLocalDate() == currentDate.toLocalDate() && date.hour == currentDate.hour && minuteDifference <= 30) {
 
             user!!.point += 10

@@ -17,7 +17,7 @@ class AuditAspect {
     private var start: Long = 0
     private lateinit var args: Array<Any>
     private var tipoRetornoYNombreMetodo: Signature? = null
-    @Pointcut("execution(* ar.edu.unq.desapp.grupoE.backEnddesappapi.webservice.*.*(..))")
+    @Pointcut("execution(* ar.edu.unq.desapp.grupoB.backenddesappapi.controller.*.*(..))")
     fun methodsStarterServicePointcut() {
     }
 

@@ -11,7 +11,7 @@ class OperationService {
     @Autowired
     lateinit var repo : OperationRepository
 
-    fun createOperation(operation : Operation) : Operation{
+    fun createOperation(operation : Operation) : Operation?{
         repo.save(operation)
         return operation
     }
@@ -20,7 +20,7 @@ class OperationService {
         return repo.findAll()
     }
 
-    fun findOfType(typeOperation: String): OperationType {
+    fun findOfType(typeOperation: String): OperationType? {
 
         var operationsType : ArrayList<OperationType> = ArrayList()
         operationsType.add(BuyOperation())

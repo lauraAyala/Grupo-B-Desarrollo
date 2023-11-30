@@ -36,7 +36,7 @@ class OperationController {
         var operationsDTO : ArrayList<OperationDTO> = ArrayList()
         for(i in service.allOperations()){
             var user  : Int = i.userCreated!!.id!!.toInt()
-            var operationDTO : OperationDTO = OperationDTO(i.nameOperation!!, i.crypto!!.typeCrypto!!.name,user)
+            var operationDTO : OperationDTO = OperationDTO(i.nameOperation!!, i.nameOperation!!,user)
             operationsDTO.add(operationDTO)
 
         }
@@ -54,8 +54,14 @@ class OperationController {
         var crypto : Crypto = Crypto(operationRequest.quote,cryptoOfType)
         var operation  = Operation(user,operationRequest.countNominal,crypto,operationRequest.quote,operationType)
 
-        var operationUpdate = serviceUser.buyOperation(user,operation)//(user, crypto,operationRequest.countNominal, operationRequest.quote)
-        service.createOperation(operationUpdate)
+        var operationUpdate  = serviceUser.buyOperation(user,operation)
+
+
+        if (operationUpdate != null) {
+            service.createOperation(operationUpdate)
+        }
+
+
         var operationDTO = OperationDTO(operationType.type!!,operationRequest.typeCrypto, operationRequest.user)
         return ResponseEntity(operationDTO, HttpStatus.CREATED)
     }
@@ -71,7 +77,9 @@ class OperationController {
         var crypto : Crypto = serviceCrypto.createCrypto(Crypto(operationRequest.quote,cryptoOfType))
         var operation = Operation(user,operationRequest.countNominal,crypto,operationRequest.quote,operationType)
         var operationUpdate = serviceUser.saleCrypto(user,operation) //(user,crypto,operationRequest.countNominal,operationRequest.quote)
-        service.createOperation(operationUpdate)
+        if (operationUpdate != null) {
+            service.createOperation(operationUpdate)
+        }
         var operationDTO = OperationDTO(operationType.type!!,operationRequest.typeCrypto, operationRequest.user)
         return ResponseEntity(operationDTO, HttpStatus.CREATED)
     }
