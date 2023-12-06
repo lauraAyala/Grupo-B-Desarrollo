@@ -24,16 +24,14 @@ class UserController {
     }
 
     @GetMapping("/users")
-    //@Cacheable("getUsers")
     fun getUsers() : List<User>{
         return serviceUser.allUsers()
     }
 
     @PostMapping("/register")
     fun saveUser(@RequestBody userRequest : UserRequest) : ResponseEntity<UserDTO> {
-        var user = User(userRequest.name!!,userRequest.lastName!!,userRequest.email!!,userRequest.password!!,userRequest.direction!!,userRequest.cvu!!, userRequest.directionWallet!!)
-        serviceUser.createUser(user)
-        var userDTO = UserDTO(user.name!!)
+
+        var userDTO = serviceUser.saveUser(userRequest)
         return ResponseEntity(userDTO, HttpStatus.CREATED)
     }
 

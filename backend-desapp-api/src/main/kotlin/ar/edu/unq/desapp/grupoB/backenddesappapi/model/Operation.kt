@@ -21,7 +21,7 @@ class Operation() {
     /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "crypto")*/
     @Transient
-    var crypto: Crypto? = null
+    var crypto: CryptoQuote? = null
     @Column
     var amount: Double? = null
     @Transient
@@ -34,7 +34,7 @@ class Operation() {
     @Column
     var operativeDate: LocalDateTime? = null
 
-    constructor(user: User?, cantNominal:Int, crypto: Crypto, amount:Double, operationType: OperationType) :this(){
+    constructor(user: User?, cantNominal:Int, crypto: CryptoQuote, amount:Double, operationType: OperationType) :this(){
 
         this.userCreated=user
         this.cantNominal=cantNominal

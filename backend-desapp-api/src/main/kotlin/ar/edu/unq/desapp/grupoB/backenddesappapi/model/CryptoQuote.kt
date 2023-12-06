@@ -6,7 +6,7 @@ import java.time.LocalDate
 import javax.persistence.*
 @NoArgsConstructor
 @Entity
-class CryptoQuote : Serializable{
+open class CryptoQuote() : Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,16 @@ class CryptoQuote : Serializable{
     @Column
     var operativeDate : LocalDate? = null
 
-    constructor(type: TypeCrypto, quote:Double){
+    constructor(type: TypeCrypto, quote:Double) : this() {
 
         this.typeCrypto = type
         this.quote = quote
         this.operativeDate = LocalDate.now()
+    }
+
+    fun isTypeCrypto(typeCrypto: TypeCrypto?): Boolean {
+
+        return this.typeCrypto == typeCrypto
     }
 
 }

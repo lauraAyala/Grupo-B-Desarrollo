@@ -10,15 +10,6 @@ import java.time.LocalDateTime
 class CryptoTest {
 
     @Test
-    fun cryptoCreatedWithAUser() {
-
-        var user1: UserBuilder = UserBuilder().builder()
-        var crypto : CryptoBuilder = CryptoBuilder().builder()
-        crypto.withUserCreated(user1)
-        Assertions.assertEquals(crypto.userCreate, user1)
-    }
-
-    @Test
     fun cryptoCreatedWithQuote() {
 
         var user1: UserBuilder = UserBuilder().builder()

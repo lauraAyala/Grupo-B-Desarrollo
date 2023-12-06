@@ -15,7 +15,7 @@ class AplicationTest {
     fun createdAplicationDoesNotCrypto(){
 
         var app: Aplication = Aplication()
-        Assertions.assertEquals(app.cryptos.size,  0)
+        Assertions.assertEquals(app.cryptosQuote.size,  0)
     }
 
     @Test
@@ -30,9 +30,9 @@ class AplicationTest {
 
         var app: Aplication = Aplication()
         var crypto: CryptoBuilder = CryptoBuilder().builder()
-        app.registerCrypto(crypto)
-        Assertions.assertEquals(app.cryptos.size,  1)
-        Assertions.assertTrue(app.cryptos.contains(crypto))
+        app.addQuote(crypto)
+        Assertions.assertEquals(app.cryptosQuote.size,  1)
+        Assertions.assertTrue(app.cryptosQuote.contains(crypto))
     }
 
     @Test
@@ -141,7 +141,7 @@ class AplicationTest {
         var app: Aplication = Aplication()
         var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
         pepe.updatePoints(50)
-        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var crypto = CryptoQuote(TypeCrypto.ALICEUSDT,20.0)
         var operationType= SaleOperation()
         var operation = Operation(pepe, 2,crypto,30.0,operationType)
         app.cancelatedOperation(operation)
@@ -156,7 +156,7 @@ class AplicationTest {
         var app: Aplication = Aplication()
         var pepe = User("pepe","Gonzalez","pepe@hotmail.com","chile456","123456","290394949949202","directionWallet")
         pepe.updatePoints(50)
-        var crypto = Crypto(20.0, TypeCrypto.ALICEUSDT)
+        var crypto = CryptoQuote(TypeCrypto.ALICEUSDT,20.0)
         var operationType= BuyOperation()
         var operation = Operation(pepe, 2,crypto,30.0,operationType)
         app.cancelatedOperation(operation)

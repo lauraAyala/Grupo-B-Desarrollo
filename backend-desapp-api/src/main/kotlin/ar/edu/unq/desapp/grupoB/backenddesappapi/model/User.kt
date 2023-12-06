@@ -29,7 +29,7 @@ open class User () : Serializable{
     @Column
     var directionWallet:String?= null
     @Transient
-    var cryotoActives:ArrayList<Crypto> = ArrayList()
+    var cryotoActives:ArrayList<CryptoQuote> = ArrayList()
     @JsonIgnore
 
 
@@ -59,7 +59,7 @@ open class User () : Serializable{
 
     }
 
-    fun addCrypto(crypto: Crypto){
+    fun addCrypto(crypto: CryptoQuote){
 
         this.cryotoActives.add(crypto)
     }
@@ -150,7 +150,7 @@ open class User () : Serializable{
 
     }
 
-    fun reportVolumOperatorOfCrypto(crypto: Crypto, date1: LocalDate, date2 : LocalDate): ReportCrypto{
+    fun reportVolumOperatorOfCrypto(crypto: CryptoQuote, date1: LocalDate, date2 : LocalDate): ReportCrypto{
 
         var operationsOfCrypto : ArrayList<Operation> = ArrayList()
         for (operation in this.operations){

@@ -39,18 +39,15 @@ class CrytoQuoteController {
 
     @PostMapping("/addCryptoQuote")
     fun saveCryptoQuote(@RequestBody cryptoQuote: CryptoQuoteRequest) : ResponseEntity<CryptoQuoteDTO> {
-        var typeCrypto = TypeCrypto.valueOf(cryptoQuote.typeQuote)
-        var cryptoQuoteUpdate = CryptoQuote(typeCrypto, cryptoQuote.quote)
-        serviceCryptoQuote.createCryptoQuote(cryptoQuoteUpdate)
-        var cryptoQuoteDTO = CryptoQuoteDTO(cryptoQuote.typeQuote,cryptoQuote.quote)
+
+        var cryptoQuoteDTO = serviceCryptoQuote.saveCryptoQuote(cryptoQuote)
         return ResponseEntity(cryptoQuoteDTO, HttpStatus.CREATED)
     }
 
     @PostMapping("/quotitationAtDate")
     fun quotitationAtDate(@RequestBody quotitationRequest: QuotitationRequest) : List<CryptoQuoteDTO> {
-        var typeCrypto = TypeCrypto.valueOf(quotitationRequest.crypto)
-        var cryptosDTO = serviceCryptoQuote.getQuotitationAtDate(typeCrypto,quotitationRequest.date)
-        return cryptosDTO
+
+        return serviceCryptoQuote.getQuotitationAtDate(quotitationRequest)
     }
 
 }
